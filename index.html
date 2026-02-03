@@ -42,7 +42,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Canvas Styling */
         #constellation-canvas {
             position: fixed;
             top: 0;
@@ -53,7 +52,36 @@
             pointer-events: none;
         }
 
-        /* --- CUSTOM SVG CURSOR --- */
+        .top-nav {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 101;
+        }
+
+        .top-nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .top-nav a:hover {
+            opacity: 1;
+            color: var(--primary-hover);
+            text-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+        }
+
         #custom-cursor {
             position: fixed;
             top: 0;
@@ -67,27 +95,18 @@
         #custom-cursor svg {
             width: 46px;
             height: 46px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.0));
         }
 
-        .cursor-path {
-            fill: #ffffff;
-            stroke: #000000;
-            stroke-width: 3.0;
-        }
-
-        .cursor-hover {
-            transform: scale(5.8);
-        }
+        .cursor-path { fill: #ffffff; stroke: #000000; stroke-width: 3.0; }
+        .cursor-hover { transform: scale(5.8); }
 
         header {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             color: var(--header-color);
             padding: 0.75rem 1rem;
             position: sticky;
-            top: 0;
+            top: 45px; 
             z-index: 100;
             border-bottom: 1px solid var(--card-border);
         }
@@ -109,11 +128,8 @@
             gap: 10px;
             letter-spacing: -0.5px;
             cursor: pointer;
-            flex-shrink: 0;
             text-shadow: 0 0 1px rgba(255,255,255,0.3);
         }
-
-        .logo i { color: #ffffff; }
 
         .search-container {
             display: flex;
@@ -130,78 +146,40 @@
             font-size: 15px;
             background: rgba(255, 255, 255, 0.03);
             color: white;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
 
-        #searchBar:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.07);
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
+        #searchBar:focus { outline: none; background: rgba(255, 255, 255, 0.07); border-color: #3b82f6; }
 
         #sortOptions {
             padding: 0.85rem 1.2rem;
             border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            font-size: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             background: #1e293b;
             color: white;
-            min-width: 140px;
             cursor: pointer;
             font-weight: 500;
         }
 
         #settings {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
             padding: 0.85rem 1.8rem;
             border-radius: 12px;
             cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
             font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+            transition: 0.3s;
         }
 
-        #settings:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
+        #settings:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
 
-        .stats-bar {
-            padding: 0.75rem 1rem;
-            background: rgba(15, 23, 42, 0.4);
-            border-bottom: 1px solid var(--card-border);
-        }
+        .stats-bar { padding: 0.75rem 1rem; background: rgba(15, 23, 42, 0.4); border-bottom: 1px solid var(--card-border); }
+        .stats-content { max-width: 1400px; margin: 0 auto; font-size: 0.875rem; color: var(--text-muted); font-weight: 500; }
 
-        .stats-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem 1rem 4rem;
-        }
-
-        #container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 1.25rem;
-        }
-
-        @media (min-width: 640px) {
-            #container { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-        }
+        main { max-width: 1400px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+        #container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.25rem; }
 
         .zone-item {
             background-color: var(--card-bg);
@@ -210,228 +188,38 @@
             overflow: hidden;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
             position: relative;
+            display: flex; flex-direction: column;
         }
 
-        .zone-item:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary-color);
-            box-shadow: 0 12px 24px -10px rgba(0,0,0,0.5);
-        }
-
-        .zone-item.featured { border: 1.5px solid var(--primary-color); }
-
+        .zone-item:hover { transform: translateY(-4px); border-color: #3b82f6; box-shadow: 0 12px 24px -10px rgba(0,0,0,0.5); }
+        .zone-item.featured { border: 1.5px solid #3b82f6; }
         .zone-item.featured::before {
-            content: "FEATURED";
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--primary-color);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            font-weight: 800;
-            z-index: 10;
+            content: "FEATURED"; position: absolute; top: 8px; right: 8px; background: #3b82f6;
+            color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; z-index: 10;
         }
 
-        .zone-item img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-            filter: grayscale(20%);
-        }
-
+        .zone-item img { width: 100%; height: 160px; object-fit: cover; transition: 0.5s; filter: grayscale(10%); }
         .zone-item:hover img { transform: scale(1.08); }
+        .zone-info { padding: 1rem; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2)); }
+        .zone-name { font-weight: 600; font-size: 0.95rem; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .zone-info {
-            padding: 1rem;
-            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.2));
-        }
-
-        .zone-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: var(--text-color);
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        #zoneViewer {
-            position: fixed;
-            inset: 0;
-            background-color: #000;
-            z-index: 10000;
-            display: none;
-            flex-direction: column;
-        }
-
-        .zone-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #0f172a;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #1e293b;
-        }
-
-        .zone-title {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            margin-right: 1rem;
-        }
-
-        #zoneName {
-            font-size: 1.1rem;
-            font-weight: 700;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        #zoneAuthor {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .zone-controls {
-            display: flex;
-            gap: 6px;
-        }
-
-        .zone-controls button {
-            background: #1e293b;
-            border: 1px solid #334155;
-            color: white;
-            padding: 0.6rem 0.8rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.2s;
-        }
-
-        .zone-controls button:hover {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-
-        .zone-controls button span { display: none; }
-
-        @media (min-width: 1024px) {
-            .zone-controls button span { display: inline; }
-            .zone-controls { gap: 10px; }
-        }
-
+        #zoneViewer { position: fixed; inset: 0; background-color: #000; z-index: 10000; display: none; flex-direction: column; }
+        .zone-header { display: flex; align-items: center; justify-content: space-between; background: #0f172a; padding: 0.75rem 1rem; border-bottom: 1px solid #1e293b; }
+        .zone-controls { display: flex; gap: 8px; }
+        .zone-controls button { background: #1e293b; border: 1px solid #334155; color: white; padding: 0.6rem 0.8rem; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .zone-controls button:hover { background: #3b82f6; }
         #zoneFrame { flex-grow: 1; border: none; background: #fff; }
 
-        #popupOverlay {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(2, 6, 23, 0.85);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            backdrop-filter: blur(8px);
-            padding: 1rem;
-        }
-
-        .popup {
-            background-color: var(--card-bg);
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 440px;
-            animation: popupIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid var(--card-border);
-            overflow-y: auto;
-            max-height: 90vh;
-        }
-
-        @keyframes popupIn {
-            from { opacity: 0; transform: scale(0.95) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .popup-header {
-            padding: 1.25rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--card-border);
-            position: sticky;
-            top: 0;
-            background: var(--card-bg);
-            z-index: 10;
-        }
-
-        .btn-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-        }
-
-        .btn {
-            padding: 0.85rem;
-            border-radius: var(--radius-md);
-            border: 1px solid transparent;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-weight: 600;
-        }
-
-        .btn-primary { background: var(--primary-color); color: white; }
-        .btn-primary:hover { background: var(--primary-hover); }
-
-        .btn-secondary { background: #1e293b; color: white; border-color: #334155; }
-        .btn-secondary:hover { background: #334155; }
-
-        .loading {
-            grid-column: 1 / -1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 4rem 0;
-            color: var(--text-muted);
-        }
-
-        .loading i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
-
-        .setting-item { margin-bottom: 1.25rem; }
-        .setting-label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: #94a3b8; font-weight: 600; }
-        .setting-input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; font-size: 14px; }
+        #popupOverlay { position: fixed; inset: 0; background-color: rgba(2, 6, 23, 0.85); display: none; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(8px); }
+        .popup { background-color: var(--card-bg); border-radius: var(--radius-lg); width: 100%; max-width: 440px; border: 1px solid var(--card-border); overflow-y: auto; max-height: 90vh; }
+        .popup-header { padding: 1.25rem; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; }
         
-        .credits-section {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--card-border);
-            text-align: center;
-        }
+        .setting-item { margin-bottom: 1rem; }
+        .setting-label { display: block; margin-bottom: 0.4rem; font-size: 0.8rem; color: #94a3b8; font-weight: 600; }
+        .setting-input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #334155; background: #0f172a; color: white; }
 
-        .credits-list { font-size: 0.85rem; color: #94a3b8; line-height: 1.8; }
-        .credits-list strong { color: white; }
-
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--background-color); }
-        ::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 10px; }
+        .loading { grid-column: 1 / -1; text-align: center; padding: 4rem; color: var(--text-muted); }
     </style>
 </head>
 <body>
@@ -439,19 +227,25 @@
 
     <div id="custom-cursor">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="" class="cursor-path" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.83-4.83 2.46 5.92c.1.24.38.35.62.25l2.31-.96c.24-.1.35-.38.25-.62l-2.46-5.92h6.29c.31 0 .47-.38.25-.6L6.35 2.86a.494.494 0 0 0-.85.35Z" class="cursor-path" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
     </div>
 
+    <nav class="top-nav">
+        <a onclick="location.reload()"><i class="fas fa-gamepad"></i> Games</a>
+        <a onclick="openProxy()"><i class="fas fa-shield-alt"></i> Prοxy</a>
+        <a href="#"><i class="fas fa-film"></i> Movies</a>
+    </nav>
+
     <header>
         <div class="header-content">
-            <div class="logo">
+            <div class="logo" onclick="location.reload()">
                 <i class="fas fa-gamepad"></i>
                 <span>Asphalt Games</span>
             </div>
             
             <div class="search-container">
-                <input type="text" id="searchBar" placeholder="Search Zones">
+                <input type="text" id="searchBar" placeholder="Search Games...">
                 <select id="sortOptions">
                     <option value="popular">Popular</option>
                     <option value="name">Name</option>
@@ -468,15 +262,15 @@
 
     <div class="stats-bar">
         <div class="stats-content">
-            <span id="zoneCount">Discovering zones...</span>
+            <span id="zoneCount">Discovering Library...</span>
         </div>
     </div>
 
     <main>
-        <div id="container" style="margin-top: 2rem;">
+        <div id="container">
             <div class="loading">
-                <i class="fas fa-circle-notch fa-spin"></i>
-                <p>Initializing Library...</p>
+                <i class="fas fa-circle-notch fa-spin fa-2x"></i>
+                <p style="margin-top:1rem">Connecting to Server...</p>
             </div>
         </div>
     </main>
@@ -484,30 +278,15 @@
     <div id="zoneViewer">
         <div class="zone-header">
             <div class="zone-title">
-                <h2 id="zoneName">Zone Title</h2>
+                <h2 id="zoneName">Zone</h2>
                 <span id="zoneId" style="display: none;"></span>
-                <a id="zoneAuthor" href="#" target="_blank">
-                    <i class="fas fa-circle-check"></i>
-                    <span>Verified Creator</span>
-                </a>
+                <span id="zoneAuthor" style="font-size:0.75rem; color:var(--text-muted);"><i class="fas fa-circle-check"></i> Verified Creator</span>
             </div>
             <div class="zone-controls">
-                <button onclick="fullscreenZone()">
-                    <i class="fas fa-expand"></i>
-                    <span>Fullscreen</span>
-                </button>
-                <button onclick="aboutBlank()">
-                    <i class="fas fa-external-link-alt"></i>
-                    <span>New Tab</span>
-                </button>
-                <button onclick="downloadZone()">
-                    <i class="fas fa-download"></i>
-                    <span>Save</span>
-                </button>
-                <button onclick="closeZone()" style="background: #7f1d1d; border-color: #991b1b;">
-                    <i class="fas fa-times"></i>
-                    <span>Close</span>
-                </button>
+                <button onclick="fullscreenZone()" title="Fullscreen"><i class="fas fa-expand"></i></button>
+                <button onclick="aboutBlank()" title="New Tab"><i class="fas fa-external-link-alt"></i></button>
+                <button onclick="downloadZone()" title="Download"><i class="fas fa-download"></i></button>
+                <button onclick="closeZone()" style="background: #7f1d1d; border-color:#b91c1c;"><i class="fas fa-times"></i> Close</button>
             </div>
         </div>
         <iframe id="zoneFrame"></iframe>
@@ -516,26 +295,20 @@
     <div id="popupOverlay">
         <div class="popup">
             <div class="popup-header">
-                <h3 id="popupTitle" style="font-weight: 700;">Settings</h3>
-                <button id="popupClose" style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;">&times;</button>
+                <h3>Settings</h3>
+                <button id="popupClose" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
             </div>
-            <div id="popupBody" style="padding: 1.5rem;">
-            </div>
+            <div id="popupBody" style="padding: 1.5rem;"></div>
         </div>
     </div>
 
-    <footer style="text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.5px;">
-        Made with ❤️ by nikegtag / Asphalt Games / All assets assigned to their respective owners
-    </footer>
-
     <script>
-        /* --- STARS ANIMATION LOGIC --- */
         const starCanvas = document.getElementById('constellation-canvas');
         const starCtx = starCanvas.getContext('2d');
         let points = [];
         const pointCount = 60;
         const maxDistance = 150;
-        const speed = 0.4;
+        const speed = 0.2;
 
         function initStars() {
             starCanvas.width = window.innerWidth;
@@ -579,23 +352,12 @@
             requestAnimationFrame(animateStars);
         }
 
-        /* --- CORE LOGIC --- */
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         });
 
-        const addHoverEffects = () => {
-            const clickables = document.querySelectorAll('button, a, input, select, .zone-item');
-            clickables.forEach(el => {
-                el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
-                el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
-            });
-        };
-
         const container = document.getElementById('container');
-        const zoneViewer = document.getElementById('zoneViewer');
-        let zoneFrame = document.getElementById('zoneFrame');
         const searchBar = document.getElementById('searchBar');
         const sortOptions = document.getElementById('sortOptions');
         const zonesURL = "https://cdn.jsdelivr.net/gh/gn-math/assets@latest/zones.json";
@@ -604,22 +366,13 @@
 
         let config = {
             panicKey: localStorage.getItem('panicKey') || '1',
-            panicUrl: localStorage.getItem('panicUrl') || 'https://launchpad.classlink.com/login',
+            panicUrl: localStorage.getItem('panicUrl') || 'https://google.com',
             cloakTitle: localStorage.getItem('cloakTitle') || 'Number Problems',
             cloakIcon: localStorage.getItem('cloakIcon') || 'favicon.png'
         };
 
         const customEntries = [
-            {
-                id: "000",
-                name: "Asphalt Prοxy",
-                author: "nikegtag",
-                url: "https://ixlcdn.koyeb.app/",
-                cover: "https://securly.pages.dev/favicon.png",
-                featured: true,
-                isExternal: true,
-                forceTop: true 
-            }
+            { id: "000", name: "Asphalt Prοxy", author: "nikegtag", url: "https://ixlcdn.koyeb.app/", cover: "https://securly.pages.dev/favicon.png", featured: true, isExternal: true, forceTop: true }
         ];
 
         let zones = [];
@@ -629,19 +382,22 @@
             try {
                 const response = await fetch(zonesURL + "?t=" + Date.now());
                 const json = await response.json();
-                zones = [...customEntries, ...json];
+                // Logic: Merge and filter out anything related to Discord
+                zones = [...customEntries, ...json].filter(item => 
+                    !item.name.toLowerCase().includes('discord') && 
+                    !(item.url && item.url.toLowerCase().includes('discord'))
+                );
                 await fetchPopularity();
                 sortZones();
-                document.getElementById('zoneCount').textContent = `${zones.length} zones available. Have fun!`;
-                setTimeout(addHoverEffects, 500);
+                document.getElementById('zoneCount').textContent = `${zones.length} items available.`;
             } catch (error) {
-                container.innerHTML = `<div class="loading"><h3>Offline Mode Active</h3><p>Could not reach the server.</p></div>`;
+                container.innerHTML = `<div class="loading"><p>Offline mode. Please check connection.</p></div>`;
             }
         }
 
         async function fetchPopularity() {
             try {
-                const response = await fetch("https://data.jsdelivr.com/v1/stats/packages/gh/gn-math/html@main/files?period=year");
+                const response = await fetch("https://data.jsdelivr.net/v1/stats/packages/gh/gn-math/html@main/files?period=year");
                 const data = await response.json();
                 data.forEach(file => {
                     const idMatch = file.name.match(/\/(\d+)\.html$/);
@@ -652,17 +408,12 @@
 
         function sortZones() {
             const sortBy = sortOptions.value;
-            let topForced = zones.filter(z => z.forceTop);
-            let remainder = zones.filter(z => !z.forceTop);
-            
-            if (sortBy === 'name') remainder.sort((a, b) => a.name.localeCompare(b.name));
-            else if (sortBy === 'id') remainder.sort((a, b) => a.id - b.id);
-            else if (sortBy === 'popular') remainder.sort((a, b) => (popularityData[b.id] || 0) - (popularityData[a.id] || 0));
-            
-            remainder.sort((a, b) => (a.isExternal ? -1 : b.isExternal ? 1 : 0));
-            remainder.sort((a, b) => (a.name === "[!] SUGGEST GAMES • Tiktok" ? -1 : b.name === "[!] SUGGEST GAMES • Tiktok" ? 1 : 0));
-            
-            displayZones([...topForced, ...remainder]);
+            let list = [...zones];
+            if (sortBy === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
+            else if (sortBy === 'id') list.sort((a, b) => a.id - b.id);
+            else if (sortBy === 'popular') list.sort((a, b) => (popularityData[b.id] || 0) - (popularityData[a.id] || 0));
+            list.sort((a, b) => (b.forceTop ? 1 : 0) - (a.forceTop ? 1 : 0));
+            displayZones(list);
         }
 
         function displayZones(zonesToShow) {
@@ -675,8 +426,8 @@
                 
                 const img = document.createElement("img");
                 img.loading = "lazy";
-                img.src = file.isExternal ? file.cover : file.cover.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
-                img.onerror = function() { this.src = 'https://via.placeholder.com/300x200/0f172a/94a3b8?text=' + encodeURIComponent(file.name); };
+                img.src = file.isExternal ? file.cover : file.cover.replace("{COVER_URL}", coverURL);
+                img.onerror = function() { this.src = 'https://via.placeholder.com/200x120?text=App'; };
                 
                 const zoneInfo = document.createElement("div");
                 zoneInfo.className = "zone-info";
@@ -689,27 +440,19 @@
                 zoneItem.appendChild(zoneInfo);
                 container.appendChild(zoneItem);
             });
-            addHoverEffects();
+            updateCursorEvents();
         }
 
         function openZone(file) {
-            if (file.name === "[!] SUGGEST GAMES • Tiktok") {
-                window.open(file.url, "_blank");
-                return;
-            }
             const viewer = document.getElementById('zoneViewer');
-            let oldFrame = document.getElementById('zoneFrame');
-            const newFrame = document.createElement('iframe');
-            newFrame.id = 'zoneFrame';
-            oldFrame.parentNode.replaceChild(newFrame, oldFrame);
-            zoneFrame = newFrame; 
-
+            const frame = document.getElementById('zoneFrame');
+            
             if (file.isExternal) {
-                zoneFrame.src = file.url;
+                frame.src = file.url;
             } else {
-                const url = file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
-                fetch(url).then(res => res.text()).then(html => {
-                    const doc = zoneFrame.contentDocument || zoneFrame.contentWindow.document;
+                const url = file.url.replace("{HTML_URL}", htmlURL);
+                fetch(url).then(r => r.text()).then(html => {
+                    const doc = frame.contentDocument || frame.contentWindow.document;
                     doc.open(); doc.write(html); doc.close();
                 });
             }
@@ -717,22 +460,27 @@
             document.getElementById('zoneName').textContent = file.name;
             document.getElementById('zoneId').textContent = file.id;
             document.getElementById('zoneAuthor').innerHTML = `<i class="fas fa-circle-check"></i> by ${file.author}`;
-            zoneViewer.style.display = "flex";
+            viewer.style.display = "flex";
             document.body.style.overflow = 'hidden';
+        }
+
+        function openProxy() {
+            const proxy = customEntries.find(z => z.id === "000");
+            if(proxy) openZone(proxy);
         }
 
         function closeZone() {
             document.getElementById('zoneViewer').style.display = "none";
-            if (zoneFrame) zoneFrame.src = "about:blank";
+            document.getElementById('zoneFrame').src = "about:blank";
             document.body.style.overflow = 'auto';
         }
 
-        function fullscreenZone() { if (zoneFrame.requestFullscreen) zoneFrame.requestFullscreen(); }
+        function fullscreenZone() { document.getElementById('zoneFrame').requestFullscreen(); }
 
         function aboutBlank() {
             const win = window.open("about:blank", "_blank");
-            const zoneIdText = document.getElementById('zoneId').textContent;
-            const zone = zones.find(z => (z.id + '') === zoneIdText);
+            const zoneId = document.getElementById('zoneId').textContent;
+            const zone = zones.find(z => (z.id + '') === zoneId);
             if (zone) {
                 if (zone.isExternal) win.location.href = zone.url;
                 else {
@@ -752,18 +500,10 @@
                     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
                     a.download = zone.name + ".html"; a.click();
                 });
-            } else alert("Download restricted for external URLs.");
-        }
-
-        function applyCloak() {
-            document.title = config.cloakTitle;
-            const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-            link.type = 'image/x-icon'; link.rel = 'shortcut icon'; link.href = config.cloakIcon;
-            document.getElementsByTagName('head')[0].appendChild(link);
+            }
         }
 
         function openSettings() {
-            document.getElementById('popupTitle').textContent = "Settings & Config";
             document.getElementById('popupBody').innerHTML = `
                 <div class="setting-item">
                     <label class="setting-label">Tab Title</label>
@@ -774,91 +514,56 @@
                     <input type="text" class="setting-input" value="${config.cloakIcon}" oninput="updateConfig('cloakIcon', this.value)">
                 </div>
                 <div class="setting-item">
-                    <label class="setting-label">Panic Switch Key</label>
+                    <label class="setting-label">Panic Key (Keyboard)</label>
                     <input type="text" class="setting-input" maxlength="1" value="${config.panicKey}" oninput="updateConfig('panicKey', this.value)">
                 </div>
                 <div class="setting-item">
-                    <label class="setting-label">Panic Redirect URL</label>
+                    <label class="setting-label">Panic URL</label>
                     <input type="text" class="setting-input" value="${config.panicUrl}" oninput="updateConfig('panicUrl', this.value)">
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-secondary" onclick="saveData()"><i class="fas fa-download"></i> Export</button>
-                    <label class="btn btn-secondary" style="margin:0; cursor:pointer;"><i class="fas fa-upload"></i> Import <input type="file" style="display:none" onchange="loadData(event)"></label>
-                </div>
-                <div class="setting-item" style="margin-top: 1.5rem;">
-                    <button class="btn btn-primary" onclick="showContact()" style="width: 100%;">
-                        <i class="fas fa-envelope"></i> Contact Support
-                    </button>
-                </div>
-                <div class="credits-section">
-                    <div class="credits-list">
-                        <strong>Asphalt Games</strong><br>
-                        Lead Developers: <strong>NikeGtag / Asphalt Games</strong><br>
-                        Data & Assets: <strong>gn-math / NikeGtag / Asphalt Games</strong><br>
-                    </div>
                 </div>
             `;
             document.getElementById('popupOverlay').style.display = "flex";
-            addHoverEffects();
-        }
-
-        function showContact() {
-            document.getElementById('popupTitle').textContent = "Support";
-            document.getElementById('popupBody').innerHTML = `
-                <div style="text-align: center; padding: 1rem;">
-                    <i class="fas fa-paper-plane" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
-                    <p style="color: white; font-size: 1.1rem; margin-bottom: 0.5rem;">Need help or have suggestions?</p>
-                    <a href="https://www.tiktok.com/@gnmath" target="_blank" class="btn btn-primary" style="text-decoration: none;">
-                        <i class="fab fa-tiktok"></i> @gnmath
-                    </a>
-                    <button class="btn btn-secondary" onclick="openSettings()" style="width: 100%; margin-top: 1rem;">Back to Settings</button>
-                </div>
-            `;
-            addHoverEffects();
         }
 
         function updateConfig(key, val) {
             config[key] = val; localStorage.setItem(key, val);
-            if (key === 'cloakTitle' || key === 'cloakIcon') applyCloak();
+            if (key === 'cloakTitle') document.title = val;
+            if (key === 'cloakIcon') {
+                const link = document.querySelector("link[rel*='icon']");
+                if (link) link.href = val;
+            }
         }
 
-        function saveData() {
-            const blob = new Blob([JSON.stringify(localStorage)], {type: "application/json"});
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-            a.download = "asphalt-settings.json"; a.click();
+        function updateCursorEvents() {
+            document.querySelectorAll('button, a, input, select, .zone-item').forEach(el => {
+                el.onmouseenter = () => cursor.classList.add('cursor-hover');
+                el.onmouseleave = () => cursor.classList.remove('cursor-hover');
+            });
         }
 
-        function loadData(event) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const data = JSON.parse(e.target.result);
-                for (let k in data) localStorage.setItem(k, data[k]);
-                location.reload();
-            };
-            reader.readAsText(event.target.files[0]);
-        }
-
-        document.getElementById('settings').addEventListener('click', openSettings);
-        document.getElementById('popupClose').addEventListener('click', () => document.getElementById('popupOverlay').style.display = "none");
+        document.getElementById('settings').onclick = openSettings;
+        document.getElementById('popupClose').onclick = () => document.getElementById('popupOverlay').style.display = "none";
+        
         searchBar.addEventListener('input', (e) => {
             const q = e.target.value.toLowerCase();
-            const filtered = zones.filter(z => z.name.toLowerCase().includes(q));
-            let forced = filtered.filter(z => z.forceTop);
-            let rest = filtered.filter(z => !z.forceTop);
-            displayZones([...forced, ...rest]);
+            displayZones(zones.filter(z => z.name.toLowerCase().includes(q)));
         });
+
         sortOptions.addEventListener('change', sortZones);
+
         document.addEventListener('keydown', (e) => {
-            if (e.key.toLowerCase() === config.panicKey.toLowerCase()) window.location.replace(config.panicUrl);
+            if (e.key === config.panicKey) window.location.replace(config.panicUrl);
             if (e.key === 'Escape') closeZone();
         });
 
-        /* --- START EVERYTHING --- */
         window.addEventListener('resize', initStars);
         initStars();
         animateStars();
-        applyCloak();
         listZones();
+        
+        document.title = config.cloakTitle;
+        const link = document.querySelector("link[rel*='icon']");
+        if (link) link.href = config.cloakIcon;
     </script>
 </body>
 </html>
