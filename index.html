@@ -36,14 +36,21 @@
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--background-color);
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
             color: var(--text-color);
             line-height: 1.5;
             min-height: 100vh;
             overflow-x: hidden;
+        }
+
+        /* Background Canvas Styling */
+        #constellation-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+            pointer-events: none;
         }
 
         /* --- CUSTOM SVG CURSOR --- */
@@ -71,35 +78,6 @@
 
         .cursor-hover {
             transform: scale(5.8);
-        }
-
-        /* --- QUOTE SECTION STYLES --- */
-        .quote-container {
-            max-width: 800px;
-            margin: 2rem auto 0;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px border var(--card-border);
-            border-radius: var(--radius-md);
-            text-align: center;
-            position: relative;
-            transition: opacity 0.5s ease;
-        }
-
-        #quoteText {
-            font-style: italic;
-            font-size: 1.1rem;
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        #quoteAuthor {
-            font-size: 0.85rem;
-            color: var(--primary-hover);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         header {
@@ -457,6 +435,8 @@
     </style>
 </head>
 <body>
+    <canvas id="constellation-canvas"></canvas>
+
     <div id="custom-cursor">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="" class="cursor-path" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -492,7 +472,7 @@
         </div>
     </div>
 
-
+    <main>
         <div id="container" style="margin-top: 2rem;">
             <div class="loading">
                 <i class="fas fa-circle-notch fa-spin"></i>
@@ -545,14 +525,62 @@
     </div>
 
     <footer style="text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.5px;">
-        Made with ❤️ by nikegtag &bull; Love you all for the support!
+        Made with ❤️ by nikegtag / Asphalt Games / All assets assigned to their respective owners
     </footer>
 
     <script>
+        /* --- STARS ANIMATION LOGIC --- */
+        const starCanvas = document.getElementById('constellation-canvas');
+        const starCtx = starCanvas.getContext('2d');
+        let points = [];
+        const pointCount = 60;
+        const maxDistance = 150;
+        const speed = 0.4;
 
-        /* --- CUSTOM CURSOR JAVASCRIPT --- */
+        function initStars() {
+            starCanvas.width = window.innerWidth;
+            starCanvas.height = window.innerHeight;
+            points = [];
+            for (let i = 0; i < pointCount; i++) {
+                points.push({
+                    x: Math.random() * starCanvas.width,
+                    y: Math.random() * starCanvas.height,
+                    vx: (Math.random() - 0.5) * speed,
+                    vy: (Math.random() - 0.5) * speed,
+                    radius: Math.random() * 1.5 + 0.5
+                });
+            }
+        }
+
+        function animateStars() {
+            starCtx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+            points.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > starCanvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > starCanvas.height) p.vy *= -1;
+                starCtx.beginPath();
+                starCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                starCtx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                starCtx.fill();
+                for (let j = i + 1; j < points.length; j++) {
+                    const p2 = points[j];
+                    const dx = p.x - p2.x; const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < maxDistance) {
+                        starCtx.beginPath();
+                        starCtx.moveTo(p.x, p.y);
+                        starCtx.lineTo(p2.x, p2.y);
+                        starCtx.strokeStyle = `rgba(255, 255, 255, ${1 - dist / maxDistance - 0.2})`;
+                        starCtx.lineWidth = 0.5;
+                        starCtx.stroke();
+                    }
+                }
+            });
+            requestAnimationFrame(animateStars);
+        }
+
+        /* --- CORE LOGIC --- */
         const cursor = document.getElementById('custom-cursor');
-
         document.addEventListener('mousemove', (e) => {
             cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
         });
@@ -564,9 +592,7 @@
                 el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
             });
         };
-        addHoverEffects();
 
-        /* --- CORE LOGIC --- */
         const container = document.getElementById('container');
         const zoneViewer = document.getElementById('zoneViewer');
         let zoneFrame = document.getElementById('zoneFrame');
@@ -592,7 +618,7 @@
                 cover: "https://securly.pages.dev/favicon.png",
                 featured: true,
                 isExternal: true,
-                forceTop: true // Added flag to ensure it is always first
+                forceTop: true 
             }
         ];
 
@@ -626,22 +652,16 @@
 
         function sortZones() {
             const sortBy = sortOptions.value;
-            
-            // 1. Isolate Asphalt Proxy (forceTop: true)
             let topForced = zones.filter(z => z.forceTop);
-            
-            // 2. Everything else
             let remainder = zones.filter(z => !z.forceTop);
             
             if (sortBy === 'name') remainder.sort((a, b) => a.name.localeCompare(b.name));
             else if (sortBy === 'id') remainder.sort((a, b) => a.id - b.id);
             else if (sortBy === 'popular') remainder.sort((a, b) => (popularityData[b.id] || 0) - (popularityData[a.id] || 0));
             
-            // 3. Keep the secondary manual sorts for TikTok and External items
             remainder.sort((a, b) => (a.isExternal ? -1 : b.isExternal ? 1 : 0));
             remainder.sort((a, b) => (a.name === "[!] SUGGEST GAMES • Tiktok" ? -1 : b.name === "[!] SUGGEST GAMES • Tiktok" ? 1 : 0));
             
-            // 4. Combine: Asphalt Proxy always first
             displayZones([...topForced, ...remainder]);
         }
 
@@ -677,12 +697,10 @@
                 window.open(file.url, "_blank");
                 return;
             }
-
             const viewer = document.getElementById('zoneViewer');
             let oldFrame = document.getElementById('zoneFrame');
             const newFrame = document.createElement('iframe');
             newFrame.id = 'zoneFrame';
-            
             oldFrame.parentNode.replaceChild(newFrame, oldFrame);
             zoneFrame = newFrame; 
 
@@ -692,9 +710,7 @@
                 const url = file.url.replace("{COVER_URL}", coverURL).replace("{HTML_URL}", htmlURL);
                 fetch(url).then(res => res.text()).then(html => {
                     const doc = zoneFrame.contentDocument || zoneFrame.contentWindow.document;
-                    doc.open();
-                    doc.write(html);
-                    doc.close();
+                    doc.open(); doc.write(html); doc.close();
                 });
             }
 
@@ -703,25 +719,11 @@
             document.getElementById('zoneAuthor').innerHTML = `<i class="fas fa-circle-check"></i> by ${file.author}`;
             zoneViewer.style.display = "flex";
             document.body.style.overflow = 'hidden';
-            zoneFrame.style.cursor = 'auto';
         }
 
         function closeZone() {
-            const viewer = document.getElementById('zoneViewer');
-            viewer.style.display = "none";
-            
-            if (zoneFrame) {
-                zoneFrame.src = "about:blank";
-                try {
-                    const doc = zoneFrame.contentDocument || zoneFrame.contentWindow.document;
-                    doc.open();
-                    doc.write("");
-                    doc.close();
-                } catch(e) {
-                    console.log("Cross-origin frame cleared via src only.");
-                }
-            }
-            
+            document.getElementById('zoneViewer').style.display = "none";
+            if (zoneFrame) zoneFrame.src = "about:blank";
             document.body.style.overflow = 'auto';
         }
 
@@ -779,24 +781,20 @@
                     <label class="setting-label">Panic Redirect URL</label>
                     <input type="text" class="setting-input" value="${config.panicUrl}" oninput="updateConfig('panicUrl', this.value)">
                 </div>
-                
                 <div class="btn-group">
                     <button class="btn btn-secondary" onclick="saveData()"><i class="fas fa-download"></i> Export</button>
                     <label class="btn btn-secondary" style="margin:0; cursor:pointer;"><i class="fas fa-upload"></i> Import <input type="file" style="display:none" onchange="loadData(event)"></label>
                 </div>
-
                 <div class="setting-item" style="margin-top: 1.5rem;">
                     <button class="btn btn-primary" onclick="showContact()" style="width: 100%;">
                         <i class="fas fa-envelope"></i> Contact Support
                     </button>
                 </div>
-
                 <div class="credits-section">
                     <div class="credits-list">
-                        <strong>NikeHub</strong><br>
-                        Lead Developer: <strong>nikegtag</strong><br>
-                        Data & Assets: <strong>gn-math / NikeGtag</strong><br>
-                        Special Thanks To: <strong>The Community, Seriously. Thanks for the support.</strong>
+                        <strong>Asphalt Games</strong><br>
+                        Lead Developers: <strong>NikeGtag / Asphalt Games</strong><br>
+                        Data & Assets: <strong>gn-math / NikeGtag / Asphalt Games</strong><br>
                     </div>
                 </div>
             `;
@@ -810,28 +808,24 @@
                 <div style="text-align: center; padding: 1rem;">
                     <i class="fas fa-paper-plane" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1.5rem;"></i>
                     <p style="color: white; font-size: 1.1rem; margin-bottom: 0.5rem;">Need help or have suggestions?</p>
-                    <p style="color: var(--text-muted); margin-bottom: 2rem;">Message us on TikTok for the fastest response.</p>
                     <a href="https://www.tiktok.com/@gnmath" target="_blank" class="btn btn-primary" style="text-decoration: none;">
                         <i class="fab fa-tiktok"></i> @gnmath
                     </a>
-                    <button class="btn btn-secondary" onclick="openSettings()" style="width: 100%; margin-top: 1rem;">
-                        Back to Settings
-                    </button>
+                    <button class="btn btn-secondary" onclick="openSettings()" style="width: 100%; margin-top: 1rem;">Back to Settings</button>
                 </div>
             `;
             addHoverEffects();
         }
 
         function updateConfig(key, val) {
-            config[key] = val;
-            localStorage.setItem(key, val);
+            config[key] = val; localStorage.setItem(key, val);
             if (key === 'cloakTitle' || key === 'cloakIcon') applyCloak();
         }
 
         function saveData() {
             const blob = new Blob([JSON.stringify(localStorage)], {type: "application/json"});
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-            a.download = "nikehub-settings.json"; a.click();
+            a.download = "asphalt-settings.json"; a.click();
         }
 
         function loadData(event) {
@@ -846,24 +840,23 @@
 
         document.getElementById('settings').addEventListener('click', openSettings);
         document.getElementById('popupClose').addEventListener('click', () => document.getElementById('popupOverlay').style.display = "none");
-        
         searchBar.addEventListener('input', (e) => {
             const q = e.target.value.toLowerCase();
             const filtered = zones.filter(z => z.name.toLowerCase().includes(q));
-            
-            // Apply forceTop logic to search results as well
             let forced = filtered.filter(z => z.forceTop);
             let rest = filtered.filter(z => !z.forceTop);
             displayZones([...forced, ...rest]);
-        })
-
+        });
         sortOptions.addEventListener('change', sortZones);
-
         document.addEventListener('keydown', (e) => {
             if (e.key.toLowerCase() === config.panicKey.toLowerCase()) window.location.replace(config.panicUrl);
             if (e.key === 'Escape') closeZone();
         });
 
+        /* --- START EVERYTHING --- */
+        window.addEventListener('resize', initStars);
+        initStars();
+        animateStars();
         applyCloak();
         listZones();
     </script>
